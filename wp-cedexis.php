@@ -5,7 +5,7 @@
 /*
 Plugin Name: Cedexis Radar for WordPress
 Description: Track site performance with Cedexis Radar
-Version: 0.1
+Version: 0.2
 Author: Erik L. Arneson
 Author URI: http://www.arnesonium.com/
 License: GPLv2 or later
@@ -36,13 +36,15 @@ function wp_cedexis_add_tag () {
         return;
     }
 
-    $radarTag =<<< EOT
-<script> 
-(function(a,b,c,d,e){function f(){var a=b.createElement("script");a.async=!0;
-a.src="//radar.cedexis.com/1/%s/radar.js";b.body.appendChild(a)}/\bMSIE 6/i
-.test(a.navigator.userAgent)||(a[c]?a[c](e,f,!1):a[d]&&a[d]("on"+e,f))})
+    $radarTag =<<<EOT
+<script>
+(function(e,c,a,g,f){function d(){var b=c.createElement("script");b.async=!0;
+b.src="//radar.cedexis.com/1/%s/radar.js";c.body.appendChild(b)}
+(function(){for(var b=[/\bMSIE (5|6)/i],a=b.length;a--;)if(b[a]
+.test(navigator.userAgent))return!1;return!0})()
+&&("complete"!==c.readyState?(a=e[a])?a(f,d,!1):(a=e[g])&&a("on"+f,d):d())})
 (window,document,"addEventListener","attachEvent","load");
-</script> 
+</script>
 EOT;
 
     printf($radarTag, $radarTagId);
@@ -71,7 +73,7 @@ do_settings_sections('wp-cedexis-settings');
       <td>
 <input type="text" name="cedexis_radar_tag_id" value="<?php echo esc_attr(get_option('cedexis_radar_tag_id')); ?>" />
 <p>To find your Radar tag ID, log into the <a target="_top" href="https://portal.cedexis.com">Cedexis Portal</a> and 
-go to the <b>Radar Tag</b> page. On line 3 of the code, you will see a number before the "radar.js" script. Enter that 
+go to <b>Radar > Javascript Tag</b> from the menu. On line 3 of the code, you will see a number before the "radar.js" script. Enter that 
 number into this box.</p>
       </td>
     </tr>
